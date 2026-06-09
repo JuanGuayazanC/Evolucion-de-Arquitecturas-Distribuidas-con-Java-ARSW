@@ -10,3 +10,4 @@ public class MovieRepository {
     public Movie findById(int id) {
         return movies.get(id);
     }
+}

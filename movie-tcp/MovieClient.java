@@ -19,5 +19,4 @@ public class MovieClient {
         out.close();
         socket.close();
     }
-    ARSW 2026-I - Taller Integrador de Arquitecturas Distribuidas Página 6
 }
