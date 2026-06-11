@@ -6,12 +6,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class SalonClient {
+public class ClassroomClient {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Operaciones: CONSULTAR_SALON, RESERVAR_SALON, LIBERAR_SALON");
-        System.out.println("Salones disponibles: E301, E302, E303, E304");
-        System.out.print("Ingrese operacion,salonId (ej: CONSULTAR_SALON,E303): ");
+        System.out.println("Operaciones: CONSULTAR_CLASSROOM, RESERVAR_CLASSROOM, LIBERAR_CLASSROOM");
+        System.out.println("Classrooms: E301, E302, E303, E304");
+        System.out.print("Ingrese operacion,classroomId (ej: CONSULTAR_CLASSROOM,E303): ");
         String request = scanner.nextLine();
         Socket socket = new Socket("127.0.0.1", 36000);
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
