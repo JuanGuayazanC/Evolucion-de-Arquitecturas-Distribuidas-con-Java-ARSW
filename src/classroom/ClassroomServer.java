@@ -6,11 +6,11 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SalonServer {
+public class ClassroomServer {
     public static void main(String[] args) throws Exception {
-        SalonRepository repository = new SalonRepository();
+        ClassroomRepository repository = new ClassroomRepository();
         ServerSocket serverSocket = new ServerSocket(36000);
-        System.out.println("SalonServer TCP escuchando en puerto 36000...");
+        System.out.println("ClassroomServer TCP escuchando en puerto 36000...");
         while (true) {
             Socket clientSocket = serverSocket.accept();
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -23,22 +23,22 @@ public class SalonServer {
         }
     }
 
-    private static String processRequest(String request, SalonRepository repository) {
+    private static String processRequest(String request, ClassroomRepository repository) {
         if (request == null || !request.contains(",")) return "ERROR_OPERACION_INVALIDA";
         String[] parts = request.split(",", 2);
         String operation = parts[0].trim();
-        String salonId = parts[1].trim();
-        Salon salon = repository.findById(salonId);
-        if (salon == null) return "ERROR_SALON_NO_EXISTE";
+        String classroomId = parts[1].trim();
+        classroom c = repository.findById(classroomId);
+        if (c == null) return "ERROR_CLASSROOM_NO_EXISTE";
         switch (operation) {
-            case "CONSULTAR_SALON": return salon.getStatus();
-            case "RESERVAR_SALON":
-                if (!salon.isAvailable()) return "ERROR_OPERACION_INVALIDA";
-                salon.reserve();
+            case "CONSULTAR_CLASSROOM": return c.getStatus();
+            case "RESERVAR_CLASSROOM":
+                if (!c.isAvailable()) return "ERROR_OPERACION_INVALIDA";
+                c.reserve();
                 return "RESERVA_EXITOSA";
-            case "LIBERAR_SALON":
-                if (salon.isAvailable()) return "ERROR_OPERACION_INVALIDA";
-                salon.release();
+            case "LIBERAR_CLASSROOM":
+                if (c.isAvailable()) return "ERROR_OPERACION_INVALIDA";
+                c.release();
                 return "LIBERACION_EXITOSA";
             default: return "ERROR_OPERACION_INVALIDA";
         }

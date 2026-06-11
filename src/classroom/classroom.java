@@ -1,15 +1,20 @@
 package classroom;
 
 public class classroom {
-    private int id;
+    private String id;
+    private boolean available;
 
-    public classroom(int id, String title, String director, int year) {
+    public classroom(String id) {
         this.id = id;
+        this.available = true;
     }
-    public int getId() {
-        return id;
-    }
-    public String toText() {
-        return id + "," ;
+
+    public String getId() { return id; }
+    public boolean isAvailable() { return available; }
+    public void reserve() { this.available = false; }
+    public void release() { this.available = true; }
+
+    public String getStatus() {
+        return available ? "CLASSROOM_DISPONIBLE" : "CLASSROOM_RESERVADO";
     }
 }
