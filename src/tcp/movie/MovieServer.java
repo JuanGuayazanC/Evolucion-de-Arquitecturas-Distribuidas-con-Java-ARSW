@@ -1,0 +1,63 @@
+package tcp.movie;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/**
+ * TCP server that handles movie queries on port 35000.
+ * Protocol: client sends "MOVIE:id", server replies with movie data or an error message.
+ */
+public class MovieServer {
+
+    /**
+     * Starts the server and listens indefinitely for client connections.
+     *
+     * @param args command-line arguments (unused)
+     * @throws Exception if the server socket cannot be created
+     */
+    public static void main(String[] args) throws Exception {
+        MovieRepository repository = new MovieRepository();
+        ServerSocket serverSocket = new ServerSocket(35000);
+        System.out.println("MovieServer TCP escuchando en puerto 35000...");
+
+        while (true) {
+            Socket clientSocket = serverSocket.accept();
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            String request = in.readLine();
+            String response = processRequest(request, repository);
+            out.println(response);
+
+            in.close();
+            out.close();
+            clientSocket.close();
+        }
+    }
+
+    /**
+     * Parses a "MOVIE:id" request and returns the corresponding movie text or an error.
+     *
+     * @param request    the raw request string from the client
+     * @param repository the movie repository to query
+     * @return text response to send back to the client
+     */
+    private static String processRequest(String request, MovieRepository repository) {
+        if (request == null || !request.startsWith("MOVIE:")) {
+            return "ERROR: formato invalido. Use MOVIE:id";
+        }
+        try {
+            int id = Integer.parseInt(request.split(":")[1]);
+            Movie movie = repository.findById(id);
+            if (movie == null) {
+                return "ERROR: pelicula no encontrada";
+            }
+            return movie.toText();
+        } catch (Exception e) {
+            return "ERROR: solicitud invalida";
+        }
+    }
+}
