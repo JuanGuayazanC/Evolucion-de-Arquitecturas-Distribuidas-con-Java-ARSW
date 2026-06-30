@@ -59,6 +59,13 @@ Esta distinción es parte del estándar HTTP y permite que herramientas como nav
 
 Los navegadores solo hacen `POST` desde formularios HTML. Para probar rutas `POST` directamente se necesita una herramienta como `curl`, PowerShell o Postman.
 
+## ¿Qué es parsear?
+
+Parsear es leer un texto y extraer información estructurada de él. Por ejemplo, el query string
+`"id=E303"` es solo texto — parsearlo significa identificar el formato `clave=valor` y extraer
+el valor `"E303"` para usarlo en el código. Los frameworks HTTP hacen esto automáticamente;
+aquí lo hacemos a mano con `substring` y `startsWith`.
+
 ## Por qué substring(3) extrae el código del salón
 
 El query string de `/rooms?id=E303` es `"id=E303"`. Los primeros 3 caracteres son `"id="`, entonces `query.substring(3)` retorna `"E303"` — elimina el prefijo y deja solo el código.
