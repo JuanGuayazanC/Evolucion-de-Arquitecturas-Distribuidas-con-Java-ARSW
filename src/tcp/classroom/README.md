@@ -84,3 +84,14 @@ if (comando.equals("CONSULTAR_SALON")) { ... }
 - El protocolo vive en convenciones de texto: si el cliente escribe `consultar_salon` en minúsculas el servidor no lo reconoce.
 - No hay concurrencia: si dos clientes se conectan al mismo tiempo, el segundo espera a que el primero termine.
 - El estado de los salones se pierde al reiniciar el servidor (solo vive en memoria).
+
+## Preguntas de reflexión
+
+**¿Qué tan fácil sería agregar una nueva operación al protocolo?**
+Es posible pero requiere modificar manualmente el servidor (`processRequest`) y acordar el nuevo formato con todos los clientes. No hay un contrato formal que se pueda compartir o validar automáticamente, por lo que un error de escritura en el comando solo se detecta en tiempo de ejecución.
+
+**¿Qué ocurre si dos clientes intentan reservar el mismo salón al mismo tiempo?**
+El primero en conectarse gana: el servidor atiende una conexión a la vez porque `accept()` bloquea hasta que termina de procesar al cliente actual. El segundo cliente espera en cola. No hay choque de datos, pero tampoco hay concurrencia real — si hay muchos clientes simultáneos, los últimos esperan más.
+
+**¿Dónde está definido realmente el contrato de comunicación?**
+En convenciones de texto implícitas dentro del código. No existe un archivo formal (como un `.proto` o un esquema JSON) que describa las operaciones, los parámetros y las respuestas posibles. Cualquier cambio en el protocolo debe comunicarse manualmente entre quien desarrolla el servidor y quien desarrolla el cliente.
