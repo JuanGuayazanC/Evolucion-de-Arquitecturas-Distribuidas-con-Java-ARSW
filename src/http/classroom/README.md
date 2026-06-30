@@ -69,6 +69,17 @@ El query string de `/rooms?id=E303` es `"id=E303"`. Los primeros 3 caracteres so
 `StringBuilder` acumula el texto en un buffer interno y genera el String final una sola vez con `.toString()`.
 Para construir texto en un bucle, `StringBuilder` es siempre la opción correcta.
 
+## Preguntas de reflexión
+
+**¿Qué ventajas ofrece HTTP frente a un protocolo de texto definido manualmente?**
+HTTP es un estándar universal — cualquier cliente (navegador, Postman, app móvil) puede hablar con el servidor sin conocer detalles internos ni acuerdos previos. Con un protocolo manual como el de la Parte I, solo pueden comunicarse clientes que conozcan exactamente el formato `COMANDO,CODIGO`, lo que limita quién puede usar el sistema.
+
+**¿Qué limitaciones tiene construir un servidor HTTP sin framework?**
+Todo tiene que implementarse a mano: parsear rutas, distinguir métodos GET de POST, manejar errores, establecer cabeceras de respuesta y gestionar tipos de contenido. Un framework como Spring Boot abstrae todo eso y permite enfocarse en la lógica del negocio. Sin él, agregar autenticación, logging o validaciones requiere código adicional en cada handler.
+
+**¿Cómo cambiaría esta solución si se usara JSON en lugar de texto plano?**
+La respuesta de `/rooms?id=E303` pasaría de `E303: DISPONIBLE` a `{"code":"E303","state":"DISPONIBLE"}`. JSON es el estándar de intercambio de datos en la web — cualquier lenguaje tiene librerías para parsearlo automáticamente, lo que elimina la necesidad de acuerdos sobre el formato del texto y hace la API consumible desde JavaScript, Python, etc.
+
 ## Diferencia con el servidor TCP
 
 | Aspecto | TCP (Parte I) | HTTP (Parte II) |
