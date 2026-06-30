@@ -5,42 +5,42 @@ package tcp.classroom;
  */
 public class Classroom {
 
-    // TODO: declarar atributos (código del salón y su estado)
+    private String code;
+    private State state;
 
     /**
      * @param code classroom code, e.g. "E301"
      */
     public Classroom(String code) {
-        // TODO: inicializar atributos (el salón empieza disponible)
+        this.code = code;
+        this.state = State.DISPONIBLE;
     }
 
     /**
      * @return true if the classroom is available
      */
     public boolean isAvailable() {
-        // TODO
-        return false;
+        return state == State.DISPONIBLE;
     }
 
     /**
      * Marks the classroom as reserved.
      */
     public void reserve() {
-        // TODO
+        if (isAvailable()) {state=State.RESERVADO;}
     }
 
     /**
      * Marks the classroom as available.
      */
     public void release() {
-        // TODO
+        if (!isAvailable()) {state=State.DISPONIBLE;}
     }
 
     /**
      * @return the classroom code
      */
     public String getCode() {
-        // TODO
-        return null;
+        return code;
     }
 }

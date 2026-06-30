@@ -8,13 +8,16 @@ import java.util.Map;
  */
 public class ClassroomRepository {
 
-    // TODO: declarar el mapa de salones
+    private Map<String, Classroom> classroooms = new HashMap<>();
 
     /**
      * Initializes the repository with classrooms E301, E302, E303 and E304.
      */
     public ClassroomRepository() {
-        // TODO: poblar el mapa con los 4 salones
+        classroooms.put("E301" ,new Classroom("E301"));
+        classroooms.put("E302" ,new Classroom("E302"));
+        classroooms.put("E303" ,new Classroom("E303"));
+        classroooms.put("E304" ,new Classroom("E304"));
     }
 
     /**
@@ -22,7 +25,6 @@ public class ClassroomRepository {
      * @return the Classroom, or null if not found
      */
     public Classroom findByCode(String code) {
-        // TODO
-        return null;
+        return classroooms.get(code);
     }
 }
