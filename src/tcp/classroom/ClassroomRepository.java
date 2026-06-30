@@ -1,5 +1,6 @@
 package tcp.classroom;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,5 +27,12 @@ public class ClassroomRepository {
      */
     public Classroom findByCode(String code) {
         return classroooms.get(code);
+    }
+
+    /**
+     * @return all classrooms in the repository
+     */
+    public Collection<Classroom> findAll() {
+        return classroooms.values();
     }
 }
